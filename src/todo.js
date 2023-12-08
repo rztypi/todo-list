@@ -92,6 +92,23 @@ class FormHandler {
 }
 
 class DomController {
+  static projectsDiv = document.getElementById("projects");
+  static todosDiv = document.getElementById("todos");
+
+  static addProjectDialog = document.getElementById("addProjectDialog");
+  static addProjectOpenBtn = document.querySelector(`button[data-opens="${this.addProjectDialog.id}"]`);
+  static addProjectCloseBtns = document.querySelectorAll(`button[data-closes="${this.addProjectDialog.id}"]`);
+  static addProjectForm = document.getElementById("addProjectForm");
+
+  static editProjectDialog = document.getElementById("editProjectDialog");
+  static editProjectCloseBtns = document.querySelectorAll(`button[data-closes="${this.editProjectDialog.id}"]`);
+  static editProjectForm = document.getElementById("editProjectForm");
+
+  static addTodoDialog = document.getElementById("addTodoDialog");
+  static addTodoOpenBtn = document.querySelector(`button[data-opens="${this.addTodoDialog.id}"]`);
+  static addTodoCloseBtns = document.querySelectorAll(`button[data-closes="${this.addTodoDialog.id}"]`);
+  static addTodoForm = document.getElementById("addTodoForm");
+
   static createButtonIcon(iconName = "circle") {
     const btn = document.createElement("button");
     const span = document.createElement("span");
@@ -104,11 +121,10 @@ class DomController {
     return btn;
   }
 
-  static renderProjectList() {
-    const projectsDiv = document.getElementById("projects");
-    const ul = document.createElement("ul");
+  static renderProjectList = () => {
+    this.projectsDiv.replaceChildren();
     
-    projectsDiv.replaceChildren();
+    const ul = document.createElement("ul");
 
     const projectList = Storage.getProjectList();
     for (let [i, project] of projectList.entries()) {
@@ -131,14 +147,13 @@ class DomController {
       div.appendChild(projectNameSpan);
       div.appendChild(editBtn);
     }
-    projectsDiv.appendChild(ul);
+    this.projectsDiv.appendChild(ul);
   }
 
-  static renderTodoList() {
-    const todosDiv = document.getElementById("todos");
-    const ul = document.createElement("ul");
+  static renderTodoList = () => {
+    this.todosDiv.replaceChildren();
     
-    todosDiv.replaceChildren();
+    const ul = document.createElement("ul");
     
     const project = Storage.getProjectList()[TodoApp.getActiveProjectIndex()];
     for (let [i, todo] of project.todoList.entries()) {
@@ -185,60 +200,7 @@ class DomController {
       div.appendChild(editBtn);
       div.appendChild(deleteBtn);
     }
-    todosDiv.appendChild(ul);
-  }
-
-  static initButtonDialog(dialogId, closeOnly = false) {
-    const dialog = document.getElementById(`${dialogId}`)
-    if (!closeOnly) {
-      document.querySelector(`button[data-opens='${dialogId}']`).addEventListener("click", () => {
-        dialog.showModal();
-      });
-    }
-    document.querySelectorAll(`button[data-closes='${dialogId}']`).forEach((btn) => btn.addEventListener("click", () => {
-      dialog.close();
-    }));
-
-    return dialog;
-  }
-
-  static initAddProject() {
-    const dialog = this.initButtonDialog("addProjectDialog");
-
-    document.getElementById("addProject").addEventListener("submit", (event) => {
-      event.preventDefault();
-      const success = FormHandler.addProject();
-      if (success) {
-        dialog.close();
-        this.renderProjectList();
-      }
-    });
-  }
-
-  static initAddTodo() {
-    const dialog = this.initButtonDialog("addTodoDialog");
-
-    document.getElementById("addTodo").addEventListener("submit", (event) => {
-      event.preventDefault();
-      const success = FormHandler.addTodo();
-      if (success) {
-        dialog.close();
-        this.renderTodoList();
-      }
-    });
-  }
-
-  static initEditProject() {
-    const dialog = this.initButtonDialog("editProjectDialog", true);
-
-    document.getElementById("editProject").addEventListener("submit", (event) => {
-      event.preventDefault();
-      const success = FormHandler.editProject();
-      if (success) {
-        dialog.close();
-        this.renderProjectList();
-      }
-    });
+    this.todosDiv.appendChild(ul);
   }
 
   static switchProject(index) {
@@ -267,12 +229,43 @@ class DomController {
     this.renderTodoList();
   }
 
+  static initForms() {
+    function baseFormHandler(event, formHandler, dialog, renderFunction) {
+      event.preventDefault();
+      const success = formHandler();
+      if (success) {
+        dialog.close();
+        renderFunction();
+      }
+    }
+
+    this.addProjectForm.addEventListener("submit", (event) => {
+      baseFormHandler(event, FormHandler.addProject, this.addProjectDialog, this.renderProjectList);
+    });
+    this.editProjectForm.addEventListener("submit", (event) => {
+      baseFormHandler(event, FormHandler.editProject, this.editProjectDialog, this.renderProjectList);
+    });
+    this.addTodoForm.addEventListener("submit", (event) => {
+      baseFormHandler(event, FormHandler.addTodo, this.addTodoDialog, this.renderTodoList);
+    });
+  }
+
+  static initDialogBtns() {
+    this.addProjectOpenBtn.addEventListener("click", () => this.addProjectDialog.showModal());
+    this.addProjectCloseBtns.forEach(btn => btn.addEventListener("click", () => this.addProjectDialog.close()));
+
+    this.editProjectCloseBtns.forEach(btn => btn.addEventListener("click", () => this.editProjectDialog.close()));
+
+    this.addTodoOpenBtn.addEventListener("click", () => this.addTodoDialog.showModal());
+    this.addTodoCloseBtns.forEach(btn => btn.addEventListener("click", () => this.addTodoDialog.close()));
+  }
+
   static initPage() {
+    this.initForms();
+    this.initDialogBtns();
+
     this.renderProjectList();
     this.renderTodoList();
-    this.initAddProject();
-    this.initAddTodo();
-    this.initEditProject();
   }
 }
 
