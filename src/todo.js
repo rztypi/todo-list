@@ -60,6 +60,15 @@ class TodoApp {
 class FormHandler {
   static editProjectId = 0;
 
+  static addProject = () => {
+    const name = document.getElementById("addProjectName");
+    if (!name) {
+      return false;
+    }
+    TodoApp.addProject(name.value);
+    return true;
+  }
+
   static editProject = () => {
     const name = document.getElementById("editProjectName");
     if (!name) {
@@ -68,10 +77,22 @@ class FormHandler {
     TodoApp.renameProject(this.editProjectId, name.value);
     return true;
   }
+
+  static addTodo = () => {
+      const name = document.getElementById("addTodoName");
+      const description = document.getElementById("addDescription");
+      const dueDate = document.getElementById("addDueDate");
+      const priority = document.getElementById("addPriority");
+      if (!name || !description || !dueDate || !priority) {
+        return false;
+      }
+      TodoApp.addTodo(name.value, description.value, dueDate.value, priority.value);
+      return true;
+  }
 }
 
 class DomController {
-  static #createButtonIcon(iconName = "circle") {
+  static createButtonIcon(iconName = "circle") {
     const btn = document.createElement("button");
     const span = document.createElement("span");
     
@@ -94,7 +115,7 @@ class DomController {
       const li = document.createElement("li");
       const div = document.createElement("div");
       const projectNameSpan = document.createElement("span");
-      const editBtn = this.#createButtonIcon("edit");
+      const editBtn = this.createButtonIcon("edit");
 
       div.addEventListener("click", () => {
         this.switchProject(i);
@@ -126,8 +147,8 @@ class DomController {
       const checkbox = document.createElement("input");
       const todoName = document.createElement("label");
       const todoDueDate = document.createElement("p");
-      const editBtn = this.#createButtonIcon("edit");
-      const deleteBtn = this.#createButtonIcon("delete");
+      const editBtn = this.createButtonIcon("edit");
+      const deleteBtn = this.createButtonIcon("delete");
 
       checkbox.id = `todo${i}`;
       checkbox.setAttribute("type", "checkbox");
@@ -182,41 +203,28 @@ class DomController {
   }
 
   static initAddProject() {
-    const addProjectDialog = this.initButtonDialog("addProjectDialog");
+    const dialog = this.initButtonDialog("addProjectDialog");
 
-    const formId = "addProject";
-    document.getElementById(`${formId}`).addEventListener("submit", (event) => {
+    document.getElementById("addProject").addEventListener("submit", (event) => {
       event.preventDefault();
-
-      const name = document.getElementById("addProjectName");
-      if (!name.value) {
-        return
+      const success = FormHandler.addProject();
+      if (success) {
+        dialog.close();
+        this.renderProjectList();
       }
-
-      TodoApp.addProject(name.value);
-      addProjectDialog.close();
-      this.renderProjectList();
     });
   }
 
   static initAddTodo() {
-    const addTodoDialog = this.initButtonDialog("addTodoDialog");
+    const dialog = this.initButtonDialog("addTodoDialog");
 
-    const formId = "addTodo";
-    document.getElementById(`${formId}`).addEventListener("submit", (event) => {
+    document.getElementById("addTodo").addEventListener("submit", (event) => {
       event.preventDefault();
-
-      const name = document.getElementById("addTodoName");
-      const description = document.getElementById("addDescription");
-      const dueDate = document.getElementById("addDueDate");
-      const priority = document.getElementById("addPriority");
-      if (!name || !description || !dueDate || !priority) {
-        return;
+      const success = FormHandler.addTodo();
+      if (success) {
+        dialog.close();
+        this.renderTodoList();
       }
-
-      TodoApp.addTodo(name.value, description.value, dueDate.value, priority.value);
-      addTodoDialog.close();
-      this.renderTodoList();
     });
   }
 
