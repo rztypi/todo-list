@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo List</title>
+</head>
+<body>
+  <header>
+    <h1>Todo List</h1>
+  </header>
+  <aside>
+    <h2>Projects</h2>
+
+    <!-- Project list -->
+    <div id="projects"></div>
+
+    <!-- Add project button + dialog -->
+    <button type="button" data-opens="addProjectDialog">
+      <span class="material-symbols-outlined">
+        add
+      </span>
+      <span>Add new project</span>
+    </button>
+    <dialog id="addProjectDialog">
+      <div>
+        <h3>Add New Project</h3>
+        <button type="button" data-closes="addProjectDialog">
+          <span class="material-symbols-outlined">
+            close
+          </span>
+        </button>
+      </div>
+      <form id="addProject">
+        <label for="addProjectName">Project Name</label>
+        <input type="text" id="addProjectName" autofocus required>
+      </form>
+      <button type="button" data-closes="addProjectDialog">Close</button>
+      <button type="submit" form="addProject">Add</button>
+    </dialog>
+
+    <!-- Edit project dialog -->
+    <dialog id="editProjectDialog">
+      <div>
+        <h3>Edit Project</h3>
+        <button type="button" data-closes="editProjectDialog">
+          <span class="material-symbols-outlined">
+            close
+          </span>
+        </button>
+      </div>
+      <form id="editProject">
+        <label for="addProjectName">Project Name</label>
+        <input type="text" id="editProjectName" autofocus required>
+      </form>
+      <button type="button" data-closes="editProjectDialog">Close</button>
+      <button type="submit" form="editProject">Save</button>
+    </dialog>
+
+  </aside>
+  <main>
+
+    <!-- Add todo button + dialog -->
+    <button type="button" data-opens="addTodoDialog">
+      <span class="material-symbols-outlined">
+        add
+      </span>
+      <span>Add new todo</span>
+    </button>
+    <dialog id="addTodoDialog">
+      <div>
+        <h3>Add New Todo</h3>
+        <button type="button" data-closes="addTodoDialog">
+          <span class="material-symbols-outlined">
+            close
+          </span>
+        </button>
+      </div>
+      <form id="addTodo">
+        <label for="addTodoName">Name</label>
+        <input type="text" id="addTodoName" autofocus required>
+        <label for="addDescription">Description</label>
+        <input type="text" id="addDescription" required>
+        <label for="addDueDate">Due Date</label>
+        <input type="date" id="addDueDate" required>
+        <label for="addPriority">Priority</label>
+        <select id="addPriority">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+      </form>
+      <button type="button" data-closes="addTodoDialog">Close</button>
+      <button type="submit" form="addTodo">Add</button>
+    </dialog>
+
+    <!-- Todo list -->
+    <div id="todos"></div>
+  </main>
+</body>
+</html>

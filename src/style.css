@@ -1,0 +1,172 @@
+/* Material icons */
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
+
+/* Fonts */
+@font-face {
+  font-family: "Poppins";
+  src: url(./fonts/poppins-v20-latin-regular.woff2);
+}
+
+/* CSS reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+input, button, textarea, select {
+  font: inherit;
+}
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* Custom styles */
+body {
+  display: grid;
+  grid-template:
+    "header header" 64px
+    "aside  main"   1fr / 300px 1fr;
+  font-family: "Poppins";
+}
+
+header {
+  grid-area: header;
+}
+
+aside {
+  grid-area: aside;
+}
+
+main {
+  grid-area: main;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+#projects li > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  height: 36px;
+  margin: 12px;
+  padding: 0 8px;
+  cursor: pointer;
+}
+
+#projects li > div > span {
+  overflow: hidden;
+}
+
+#projects li > div > button {
+  display: none;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+#projects li > div:hover {
+  background-color: rgb(0 0 0 / 0.1);
+}
+
+#projects li > div:hover > button {
+  display: flex;
+  align-items: center;
+}
+
+button[data-opens="addProjectDialog"] {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background-color: transparent;
+  border: none;
+}
+
+button[data-opens="addTodoDialog"] {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background-color: transparent;
+  border: none;
+}
+
+#todos li > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px;
+  padding: 12px;
+  background-color: rgb(0 0 0 / 0.1);
+}
+
+#todos li > div > p {
+  margin-left: auto;
+}
+
+#todos li > div > button {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+}
+
+.done {
+  text-decoration: line-through;
+}
+
+dialog {
+  top: 64px;
+  margin: 0 auto;
+}
+
+::backdrop {
+  background-color: rgb(0 0 0 / 0.5);
+  opacity: 0.75;
+}
+
+dialog > div:first-of-type {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+dialog > div:first-of-type > button {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+}
+
+dialog > form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+dialog input {
+  width: 300px;
+}
