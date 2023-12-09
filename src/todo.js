@@ -44,14 +44,23 @@ class TodoApp {
   }
 
   static addTodo(name, description, dueDate, priority) {
-    const project = Storage.getProjectList()[this.activeProjectIndex];
+    const project = Storage.getProjectList()[this.getActiveProjectIndex()];
     const todo = { name, description, dueDate, priority, done: false };
     project.todoList.push(todo);
     Storage.saveProjectList();
   }
 
+  static editTodo(index, name, description, dueDate, priority) {
+    const todo = Storage.getProjectList()[this.getActiveProjectIndex()].todoList[index];
+    todo.name = name;
+    todo.description = description;
+    todo.dueDate = dueDate;
+    todo.priority = priority;
+    Storage.saveProjectList();
+  }
+
   static deleteTodo(index) {
-    const project = Storage.getProjectList()[this.activeProjectIndex];
+    const project = Storage.getProjectList()[this.getActiveProjectIndex()];
     project.todoList.splice(index, 1);
     Storage.saveProjectList();
   }
@@ -59,6 +68,7 @@ class TodoApp {
 
 class FormHandler {
   static editProjectId = 0;
+  static editTodoId = 0;
 
   static addProject = () => {
     const name = document.getElementById("addProjectName");
@@ -79,10 +89,11 @@ class FormHandler {
   }
 
   static deleteProject = () => {
-    if (Storage.getProjectList().length === 1) {
+    const projectListLength = Storage.getProjectList().length;
+    if (projectListLength === 1) {
       return false;
     }
-    if (this.editProjectId === TodoApp.getActiveProjectIndex()) {
+    if (this.editProjectId === TodoApp.getActiveProjectIndex() || TodoApp.getActiveProjectIndex() + 1 === projectListLength) {
       TodoApp.setActiveProjectIndex(0);
     }
     TodoApp.deleteProject(this.editProjectId);
@@ -100,6 +111,18 @@ class FormHandler {
       TodoApp.addTodo(name.value, description.value, dueDate.value, priority.value);
       return true;
   }
+
+  static editTodo = () => {
+    const name = document.getElementById("editTodoName");
+    const description = document.getElementById("editDescription");
+    const dueDate = document.getElementById("editDueDate");
+    const priority = document.getElementById("editPriority");
+    if (!name || !description || !dueDate || !priority) {
+      return false;
+    }
+    TodoApp.editTodo(this.editTodoId, name.value, description.value, dueDate.value, priority.value);
+    return true;
+}
 }
 
 class DomController {
@@ -120,6 +143,10 @@ class DomController {
   static addTodoOpenBtn = document.querySelector(`button[data-opens="${this.addTodoDialog.id}"]`);
   static addTodoCloseBtns = document.querySelectorAll(`button[data-closes="${this.addTodoDialog.id}"]`);
   static addTodoForm = document.getElementById("addTodoForm");
+
+  static editTodoDialog = document.getElementById("editTodoDialog");
+  static editTodoCloseBtns = document.querySelectorAll(`button[data-closes="${this.editTodoDialog.id}"]`);
+  static editTodoForm = document.getElementById("editTodoForm");
 
   static createButtonIcon(iconName = "circle") {
     const btn = document.createElement("button");
@@ -198,7 +225,7 @@ class DomController {
       todoName.setAttribute("for", `todo${i}`);
       todoDueDate.textContent = todo.dueDate;
       editBtn.addEventListener("click", () => {
-        this.openEditTodoDialog(i);
+        this.openEditTodoDialog(i, todo);
       })
       deleteBtn.addEventListener("click", () => {
         this.deleteTodo(i);
@@ -226,14 +253,26 @@ class DomController {
   static openEditProjectDialog(index, project) {
     FormHandler.editProjectId = index;
     
-    document.getElementById("editProjectDialog").showModal();
+    this.editProjectDialog.showModal();
 
     const name = document.getElementById("editProjectName");
     name.value = project.name;
   }
 
-  static openEditTodoDialog(index) {
-    console.log(`Edit id: ${index}`);
+  static openEditTodoDialog(index, todo) {
+    FormHandler.editTodoId = index;
+
+    this.editTodoDialog.showModal();
+
+    const name = document.getElementById("editTodoName");
+    const description = document.getElementById("editDescription");
+    const dueDate = document.getElementById("editDueDate");
+    const priority = document.getElementById("editPriority");
+
+    name.value = todo.name;
+    description.value = todo.description;
+    dueDate.value = todo.dueDate;
+    priority.value = todo.priority;
   }
 
   static deleteTodo(index) {
@@ -264,6 +303,9 @@ class DomController {
     this.addTodoForm.addEventListener("submit", (event) => {
       baseFormHandler(event, FormHandler.addTodo, this.addTodoDialog);
     });
+    this.editTodoForm.addEventListener("submit", (event) => {
+      baseFormHandler(event, FormHandler.editTodo, this.editTodoDialog);
+    })
   }
 
   static initDialogBtns() {
@@ -274,6 +316,8 @@ class DomController {
 
     this.addTodoOpenBtn.addEventListener("click", () => this.addTodoDialog.showModal());
     this.addTodoCloseBtns.forEach(btn => btn.addEventListener("click", () => this.addTodoDialog.close()));
+
+    this.editTodoCloseBtns.forEach(btn => btn.addEventListener("click", () => this.editTodoDialog.close()));
   }
 
   static initPage() {

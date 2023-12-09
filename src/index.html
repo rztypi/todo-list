@@ -99,6 +99,34 @@
 
     <!-- Todo list -->
     <div id="todos"></div>
+
+    <!-- Edit todo dialog -->
+    <dialog id="editTodoDialog">
+      <div>
+        <h3>Edit Todo</h3>
+        <button type="button" data-closes="editTodoDialog">
+          <span class="material-symbols-outlined">
+            close
+          </span>
+        </button>
+      </div>
+      <form id="editTodoForm">
+        <label for="editTodoName">Name</label>
+        <input type="text" id="editTodoName" autofocus required>
+        <label for="editDescription">Description</label>
+        <input type="text" id="editDescription">
+        <label for="editDueDate">Due Date</label>
+        <input type="date" id="editDueDate">
+        <label for="editPriority">Priority</label>
+        <select id="editPriority">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+      </form>
+      <button type="button" data-closes="editTodoDialog">Close</button>
+      <button type="submit" form="editTodoForm">Save</button>
+    </dialog>
   </main>
 </body>
 </html>
