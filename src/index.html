@@ -55,6 +55,9 @@
       </form>
       <button type="button" data-closes="editProjectDialog">Close</button>
       <button type="submit" form="editProjectForm">Save</button>
+      <form id="deleteProjectForm">
+        <button type="submit">Delete Project</button>
+      </form>
     </dialog>
 
   </aside>
@@ -80,9 +83,9 @@
         <label for="addTodoName">Name</label>
         <input type="text" id="addTodoName" autofocus required>
         <label for="addDescription">Description</label>
-        <input type="text" id="addDescription" required>
+        <input type="text" id="addDescription">
         <label for="addDueDate">Due Date</label>
-        <input type="date" id="addDueDate" required>
+        <input type="date" id="addDueDate">
         <label for="addPriority">Priority</label>
         <select id="addPriority">
           <option value="low">Low</option>

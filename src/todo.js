@@ -78,6 +78,17 @@ class FormHandler {
     return true;
   }
 
+  static deleteProject = () => {
+    if (Storage.getProjectList().length === 1) {
+      return false;
+    }
+    if (this.editProjectId === TodoApp.getActiveProjectIndex()) {
+      TodoApp.setActiveProjectIndex(0);
+    }
+    TodoApp.deleteProject(this.editProjectId);
+    return true;
+  }
+
   static addTodo = () => {
       const name = document.getElementById("addTodoName");
       const description = document.getElementById("addDescription");
@@ -103,6 +114,7 @@ class DomController {
   static editProjectDialog = document.getElementById("editProjectDialog");
   static editProjectCloseBtns = document.querySelectorAll(`button[data-closes="${this.editProjectDialog.id}"]`);
   static editProjectForm = document.getElementById("editProjectForm");
+  static deleteProjectForm = document.getElementById("deleteProjectForm");
 
   static addTodoDialog = document.getElementById("addTodoDialog");
   static addTodoOpenBtn = document.querySelector(`button[data-opens="${this.addTodoDialog.id}"]`);
@@ -230,23 +242,27 @@ class DomController {
   }
 
   static initForms() {
-    function baseFormHandler(event, formHandler, dialog, renderFunction) {
+    const baseFormHandler = (event, formHandler, dialog) => {
       event.preventDefault();
       const success = formHandler();
       if (success) {
         dialog.close();
-        renderFunction();
+        this.renderProjectList();
+        this.renderTodoList();
       }
     }
 
     this.addProjectForm.addEventListener("submit", (event) => {
-      baseFormHandler(event, FormHandler.addProject, this.addProjectDialog, this.renderProjectList);
+      baseFormHandler(event, FormHandler.addProject, this.addProjectDialog);
     });
     this.editProjectForm.addEventListener("submit", (event) => {
-      baseFormHandler(event, FormHandler.editProject, this.editProjectDialog, this.renderProjectList);
+      baseFormHandler(event, FormHandler.editProject, this.editProjectDialog);
+    });
+    this.deleteProjectForm.addEventListener("submit", (event) => {
+      baseFormHandler(event, FormHandler.deleteProject, this.editProjectDialog);
     });
     this.addTodoForm.addEventListener("submit", (event) => {
-      baseFormHandler(event, FormHandler.addTodo, this.addTodoDialog, this.renderTodoList);
+      baseFormHandler(event, FormHandler.addTodo, this.addTodoDialog);
     });
   }
 

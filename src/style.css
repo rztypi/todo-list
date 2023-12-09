@@ -170,3 +170,7 @@ dialog > form {
 dialog input {
   width: 300px;
 }
+
+#deleteProjectForm {
+  margin-top: 36px;
+}
