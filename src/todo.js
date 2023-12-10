@@ -172,6 +172,9 @@ class DomController {
       const projectNameSpan = document.createElement("span");
       const editBtn = this.createButtonIcon("edit");
 
+      if (i === TodoApp.getActiveProjectIndex()) {
+        div.classList.add("active");
+      }
       div.addEventListener("click", () => {
         this.switchProject(i);
       });
@@ -247,6 +250,7 @@ class DomController {
       return;
     }
     TodoApp.setActiveProjectIndex(index);
+    this.renderProjectList();
     this.renderTodoList();
   }
   
@@ -320,9 +324,53 @@ class DomController {
     this.editTodoCloseBtns.forEach(btn => btn.addEventListener("click", () => this.editTodoDialog.close()));
   }
 
+  static initThemeSwitcher() {
+    const getStoredTheme = () => localStorage.getItem("theme");
+    const setStoredTheme = (theme) => localStorage.setItem("theme", theme);
+
+    const getPreferredTheme = () => {
+      const theme = getStoredTheme();
+      if (!theme) {
+        return "light";
+      }
+      return theme;
+    }
+
+    const setTheme = (theme) => {
+      document.documentElement.setAttribute("data-theme", theme);
+    }
+
+    const themeSwitcher = document.getElementById("themeSwitch");
+
+    const showActiveTheme = (theme) => {
+      if (!themeSwitcher) {
+        return;
+      }
+
+      const icon = themeSwitcher.querySelector("span");
+      if (theme === "light") {
+        icon.textContent = "light_mode";
+      } else {
+        icon.textContent = "dark_mode";
+      }
+    }
+
+    setTheme(getPreferredTheme());
+    showActiveTheme(getPreferredTheme());
+
+    themeSwitcher.addEventListener("click", () => {
+      const theme = (getPreferredTheme() === "light") ? "dark" : "light";
+      setTheme(theme);
+      showActiveTheme(theme);
+      setStoredTheme(theme);
+    });
+
+  }
+
   static initPage() {
     this.initForms();
     this.initDialogBtns();
+    this.initThemeSwitcher();
 
     this.renderProjectList();
     this.renderTodoList();

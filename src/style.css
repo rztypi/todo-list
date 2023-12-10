@@ -24,26 +24,92 @@ img, picture, video, canvas, svg {
 }
 input, button, textarea, select {
   font: inherit;
+  color: inherit;
 }
 p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
 }
 
 /* Custom styles */
+:root {
+  --normal-text-color: #222;
+  --muted-text-color: #444;
+  --active-text-color: #000;
+  --base-color: #fff;
+  --light-fade-color: rgb(0 0 0 / 0.05);
+  --fade-color: rgb(0 0 0 / 0.1);
+  --heavy-fade-color: rgb(0 0 0 / 0.15);
+}
+
+:root[data-theme="light"] {
+  --normal-text-color: #222;
+  --muted-text-color: #444;
+  --active-text-color: #000;
+  --base-color: #fff;
+  --light-fade-color: rgb(0 0 0 / 0.05);
+  --fade-color: rgb(0 0 0 / 0.1);
+  --heavy-fade-color: rgb(0 0 0 / 0.15);
+}
+
+:root[data-theme="dark"] {
+  --normal-text-color: #ddd;
+  --muted-text-color: #bbb;
+  --active-text-color: #fff;
+  --base-color: #222;
+  --light-fade-color: rgb(255 255 255 / 0.05);
+  --fade-color: rgb(255 255 255 / 0.1);
+  --heavy-fade-color: rgb(255 255 255 / 0.15);
+}
+
+* {
+  transition: all 0.1s;
+}
+
 body {
   display: grid;
   grid-template:
     "header header" 64px
     "aside  main"   1fr / 300px 1fr;
+  min-height: 100vh;
+  background-color: var(--base-color);
   font-family: "Poppins";
+  color: var(--normal-text-color);
+}
+
+p, span, label, h2 {
+  color: var(--normal-text-color);
 }
 
 header {
   grid-area: header;
+  background-color: var(--fade-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header > h1 {
+  margin-left: 16px;
+  color: var(--active-text-color);
+}
+
+#themeSwitch {
+  margin-right: 16px;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
 }
 
 aside {
   grid-area: aside;
+  background-color: var(--light-fade-color);
+}
+
+aside > h2 {
+  margin-left: 16px;
+  margin-top: 16px;
 }
 
 main {
@@ -70,6 +136,10 @@ button {
   cursor: pointer;
 }
 
+#projects li > div.active {
+  background-color: var(--light-fade-color);
+}
+
 #projects li > div > span {
   overflow: hidden;
 }
@@ -79,11 +149,15 @@ button {
   padding: 0;
   background-color: transparent;
   border: none;
-  cursor: pointer;
+  color: var(--muted-text-color);
+}
+
+#projects li > div > button:hover {
+  color: var(--active-text-color);
 }
 
 #projects li > div:hover {
-  background-color: rgb(0 0 0 / 0.1);
+  background-color: var(--light-fade-color);
 }
 
 #projects li > div:hover > button {
@@ -92,7 +166,7 @@ button {
 }
 
 button[data-opens="addProjectDialog"] {
-  width: 100%;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -102,7 +176,8 @@ button[data-opens="addProjectDialog"] {
 }
 
 button[data-opens="addTodoDialog"] {
-  width: 100%;
+  margin: 0 auto;
+  margin-top: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,13 +186,23 @@ button[data-opens="addTodoDialog"] {
   border: none;
 }
 
+button[data-opens="addProjectDialog"]:hover,
+button[data-opens="addTodoDialog"]:hover {
+  transform: scale(1.05);
+}
+
 #todos li > div {
   display: flex;
   align-items: center;
   gap: 12px;
   margin: 12px;
   padding: 12px;
-  background-color: rgb(0 0 0 / 0.1);
+  background-color: var(--fade-color);
+  outline: 1px solid var(--base-color);
+}
+
+#todos li > div:hover {
+  outline: 1px solid var(--heavy-fade-color);
 }
 
 #todos li > div > p {
@@ -130,6 +215,11 @@ button[data-opens="addTodoDialog"] {
   padding: 0;
   background-color: transparent;
   border: none;
+  color: var(--muted-text-color);
+}
+
+#todos li > div > button:hover {
+  color: var(--active-text-color);
 }
 
 .done {
@@ -141,9 +231,8 @@ dialog {
   margin: 0 auto;
 }
 
-::backdrop {
-  background-color: rgb(0 0 0 / 0.5);
-  opacity: 0.75;
+dialog::backdrop {
+  backdrop-filter: blur(4px);
 }
 
 dialog > div:first-of-type {
