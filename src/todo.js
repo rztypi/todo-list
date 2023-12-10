@@ -4,12 +4,12 @@ class Storage {
     { name: "This week", todoList: [] },
   ];
 
-  static getProjectList() {
+  static getProjectList = () => {
     this.projectList = JSON.parse(localStorage.getItem("projectList")) || this.projectList;
     return this.projectList;
   }
 
-  static saveProjectList() {
+  static saveProjectList = () => {
     localStorage.setItem("projectList", JSON.stringify(this.projectList));
   }
 }
@@ -17,40 +17,40 @@ class Storage {
 class TodoApp {
   static activeProjectIndex = 0;
 
-  static getActiveProjectIndex() {
+  static getActiveProjectIndex = () => {
     return this.activeProjectIndex;
   }
 
-  static setActiveProjectIndex(index) {
+  static setActiveProjectIndex = (index) => {
     this.activeProjectIndex = index;
   }
 
-  static addProject(name) {
+  static addProject = (name) => {
     const projectList = Storage.getProjectList();
     projectList.push({ name, todoList: [] });
     Storage.saveProjectList();
   }
 
-  static deleteProject(index) {
+  static deleteProject = (index) => {
     const projectList = Storage.getProjectList();
     projectList.splice(index, 1);
     Storage.saveProjectList();
   }
 
-  static renameProject(index, name) {
+  static renameProject = (index, name) => {
     const project = Storage.getProjectList()[index];
     project.name = name;
     Storage.saveProjectList();
   }
 
-  static addTodo(name, description, dueDate, priority) {
+  static addTodo = (name, description, dueDate, priority) => {
     const project = Storage.getProjectList()[this.getActiveProjectIndex()];
     const todo = { name, description, dueDate, priority, done: false };
     project.todoList.push(todo);
     Storage.saveProjectList();
   }
 
-  static editTodo(index, name, description, dueDate, priority) {
+  static editTodo = (index, name, description, dueDate, priority) => {
     const todo = Storage.getProjectList()[this.getActiveProjectIndex()].todoList[index];
     todo.name = name;
     todo.description = description;
@@ -59,7 +59,7 @@ class TodoApp {
     Storage.saveProjectList();
   }
 
-  static deleteTodo(index) {
+  static deleteTodo = (index) => {
     const project = Storage.getProjectList()[this.getActiveProjectIndex()];
     project.todoList.splice(index, 1);
     Storage.saveProjectList();
@@ -148,7 +148,7 @@ class DomController {
   static editTodoCloseBtns = document.querySelectorAll(`button[data-closes="${this.editTodoDialog.id}"]`);
   static editTodoForm = document.getElementById("editTodoForm");
 
-  static createButtonIcon(iconName = "circle") {
+  static createButtonIcon = (iconName = "circle") => {
     const btn = document.createElement("button");
     const span = document.createElement("span");
     
@@ -250,7 +250,7 @@ class DomController {
     this.todosDiv.appendChild(ul);
   }
 
-  static switchProject(index) {
+  static switchProject = (index) => {
     if (index === TodoApp.getActiveProjectIndex()) {
       return;
     }
@@ -259,7 +259,7 @@ class DomController {
     this.renderTodoList();
   }
   
-  static openEditProjectDialog(index, project) {
+  static openEditProjectDialog = (index, project) => {
     FormHandler.editProjectId = index;
     
     this.editProjectDialog.showModal();
@@ -268,7 +268,7 @@ class DomController {
     name.value = project.name;
   }
 
-  static openEditTodoDialog(index, todo) {
+  static openEditTodoDialog = (index, todo) => {
     FormHandler.editTodoId = index;
 
     this.editTodoDialog.showModal();
@@ -284,12 +284,12 @@ class DomController {
     priority.value = todo.priority;
   }
 
-  static deleteTodo(index) {
+  static deleteTodo = (index) => {
     TodoApp.deleteTodo(index);
     this.renderTodoList();
   }
 
-  static initForms() {
+  static initForms = () => {
     const baseFormHandler = (event, formHandler, dialog) => {
       event.preventDefault();
       const success = formHandler();
@@ -317,7 +317,7 @@ class DomController {
     })
   }
 
-  static initDialogBtns() {
+  static initDialogBtns = () => {
     this.addProjectOpenBtn.addEventListener("click", () => this.addProjectDialog.showModal());
     this.addProjectCloseBtns.forEach(btn => btn.addEventListener("click", () => this.addProjectDialog.close()));
 
@@ -329,7 +329,7 @@ class DomController {
     this.editTodoCloseBtns.forEach(btn => btn.addEventListener("click", () => this.editTodoDialog.close()));
   }
 
-  static initThemeSwitcher() {
+  static initThemeSwitcher = () => {
     const getStoredTheme = () => localStorage.getItem("theme");
     const setStoredTheme = (theme) => localStorage.setItem("theme", theme);
 
@@ -372,7 +372,7 @@ class DomController {
 
   }
 
-  static initPage() {
+  static initPage = () => {
     this.initForms();
     this.initDialogBtns();
     this.initThemeSwitcher();
