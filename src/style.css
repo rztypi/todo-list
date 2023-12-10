@@ -24,7 +24,6 @@ img, picture, video, canvas, svg {
 }
 input, button, textarea, select {
   font: inherit;
-  color: inherit;
 }
 p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
@@ -38,7 +37,7 @@ p, h1, h2, h3, h4, h5, h6 {
   --base-color: #fff;
   --light-fade-color: rgb(0 0 0 / 0.05);
   --fade-color: rgb(0 0 0 / 0.1);
-  --heavy-fade-color: rgb(0 0 0 / 0.15);
+  --heavy-fade-color: rgb(0 0 0 / 0.5);
 }
 
 :root[data-theme="light"] {
@@ -48,7 +47,7 @@ p, h1, h2, h3, h4, h5, h6 {
   --base-color: #fff;
   --light-fade-color: rgb(0 0 0 / 0.05);
   --fade-color: rgb(0 0 0 / 0.1);
-  --heavy-fade-color: rgb(0 0 0 / 0.15);
+  --heavy-fade-color: rgb(0 0 0 / 0.5);
 }
 
 :root[data-theme="dark"] {
@@ -58,7 +57,7 @@ p, h1, h2, h3, h4, h5, h6 {
   --base-color: #222;
   --light-fade-color: rgb(255 255 255 / 0.05);
   --fade-color: rgb(255 255 255 / 0.1);
-  --heavy-fade-color: rgb(255 255 255 / 0.15);
+  --heavy-fade-color: rgb(255 255 255 / 0.5);
 }
 
 * {
@@ -76,7 +75,7 @@ body {
   color: var(--normal-text-color);
 }
 
-p, span, label, h2 {
+p, span, label, h2, h3 {
   color: var(--normal-text-color);
 }
 
@@ -100,6 +99,14 @@ header > h1 {
   border: none;
   display: flex;
   align-items: center;
+}
+
+#themeSwitch > span {
+  color: var(--muted-text-color);
+}
+
+#themeSwitch > span:hover {
+  color: var(--active-text-color);
 }
 
 aside {
@@ -149,10 +156,13 @@ button {
   padding: 0;
   background-color: transparent;
   border: none;
+}
+
+#projects li > div > button > span {
   color: var(--muted-text-color);
 }
 
-#projects li > div > button:hover {
+#projects li > div > button > span:hover {
   color: var(--active-text-color);
 }
 
@@ -215,10 +225,13 @@ button[data-opens="addTodoDialog"]:hover {
   padding: 0;
   background-color: transparent;
   border: none;
+}
+
+#todos li > div > button > span {
   color: var(--muted-text-color);
 }
 
-#todos li > div > button:hover {
+#todos li > div > button > span:hover {
   color: var(--active-text-color);
 }
 
@@ -229,10 +242,20 @@ button[data-opens="addTodoDialog"]:hover {
 dialog {
   top: 64px;
   margin: 0 auto;
+  background-color: var(--base-color);
+  border: 2px solid var(--heavy-fade-color);
 }
 
 dialog::backdrop {
   backdrop-filter: blur(4px);
+}
+
+dialog input,
+dialog select {
+  margin-bottom: 6px;
+  border: 1px solid var(--heavy-fade-color);
+  background-color: var(--base-color);
+  color: var(--normal-text-color);
 }
 
 dialog > div:first-of-type {

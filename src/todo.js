@@ -179,6 +179,7 @@ class DomController {
         this.switchProject(i);
       });
       projectNameSpan.textContent = project.name;
+      editBtn.title = "Edit project"
       editBtn.addEventListener("click", (event) => {
         event.stopPropagation();
         this.openEditProjectDialog(i, project);
@@ -197,6 +198,7 @@ class DomController {
     
     const ul = document.createElement("ul");
     
+    const priorityColors = { low: "green", medium: "yellow", high: "red"};
     const project = Storage.getProjectList()[TodoApp.getActiveProjectIndex()];
     for (let [i, todo] of project.todoList.entries()) {
       const li = document.createElement("li");
@@ -207,6 +209,7 @@ class DomController {
       const editBtn = this.createButtonIcon("edit");
       const deleteBtn = this.createButtonIcon("delete");
 
+      div.style.borderLeft = `6px solid ${priorityColors[todo.priority]}`;
       checkbox.id = `todo${i}`;
       checkbox.setAttribute("type", "checkbox");
       if (todo.done) {
@@ -227,9 +230,11 @@ class DomController {
       todoName.textContent = todo.name;
       todoName.setAttribute("for", `todo${i}`);
       todoDueDate.textContent = todo.dueDate;
+      editBtn.title = "Edit to-do"
       editBtn.addEventListener("click", () => {
         this.openEditTodoDialog(i, todo);
       })
+      deleteBtn.title = "Delete to-do"
       deleteBtn.addEventListener("click", () => {
         this.deleteTodo(i);
       })
