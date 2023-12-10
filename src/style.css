@@ -38,6 +38,7 @@ p, h1, h2, h3, h4, h5, h6 {
   --light-fade-color: rgb(0 0 0 / 0.05);
   --fade-color: rgb(0 0 0 / 0.1);
   --heavy-fade-color: rgb(0 0 0 / 0.5);
+  color-scheme: normal;
 }
 
 :root[data-theme="light"] {
@@ -48,6 +49,7 @@ p, h1, h2, h3, h4, h5, h6 {
   --light-fade-color: rgb(0 0 0 / 0.05);
   --fade-color: rgb(0 0 0 / 0.1);
   --heavy-fade-color: rgb(0 0 0 / 0.5);
+  color-scheme: light;
 }
 
 :root[data-theme="dark"] {
@@ -58,6 +60,7 @@ p, h1, h2, h3, h4, h5, h6 {
   --light-fade-color: rgb(255 255 255 / 0.05);
   --fade-color: rgb(255 255 255 / 0.1);
   --heavy-fade-color: rgb(255 255 255 / 0.5);
+  color-scheme: dark;
 }
 
 * {
