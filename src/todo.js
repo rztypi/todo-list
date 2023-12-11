@@ -305,8 +305,6 @@ class DomController {
     const description = document.querySelector("#detailsDescription > span:last-child");
     const dueDate = document.querySelector("#detailsDueDate > span:last-child");
     const priority = document.querySelector("#detailsPriority > span:last-child");
-    
-    console.log(todo)
 
     name.textContent = todo.name;
     description.textContent = todo.description || "...";

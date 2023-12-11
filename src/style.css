@@ -258,6 +258,7 @@ dialog::backdrop {
 
 dialog input,
 dialog select {
+  width: 300px;
   margin-bottom: 16px;
   border: 1px solid var(--heavy-fade-color);
   background-color: var(--base-color);
@@ -285,8 +286,8 @@ dialog > form {
   flex-direction: column;
 }
 
-dialog input {
-  width: 300px;
+dialog button[type="submit"] {
+  width: 100%;
 }
 
 dialog label {
@@ -295,15 +296,6 @@ dialog label {
 
 hr {
   margin: 24px 0;
-}
-
-.dialogButtons {
-  display: flex;
-  gap: 6px;
-}
-
-.dialogButtons > :first-child {
-  margin-left: auto;
 }
 
 #deleteProjectForm > button {
