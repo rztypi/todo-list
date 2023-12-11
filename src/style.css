@@ -207,11 +207,12 @@ button[data-opens="addTodoDialog"]:hover {
 #todos li > div {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin: 12px;
+  gap: 16px;
+  margin: 16px;
   padding: 12px;
   background-color: var(--fade-color);
   outline: 1px solid var(--base-color);
+  cursor: pointer;
 }
 
 #todos li > div:hover {
@@ -220,6 +221,7 @@ button[data-opens="addTodoDialog"]:hover {
 
 #todos li > div > p {
   margin-left: auto;
+  flex-shrink: 0;
 }
 
 #todos li > div > button {
@@ -243,7 +245,8 @@ button[data-opens="addTodoDialog"]:hover {
 }
 
 dialog {
-  top: 64px;
+  top: 10vh;
+  max-height: 80vh;
   margin: 0 auto;
   background-color: var(--base-color);
   border: 2px solid var(--heavy-fade-color);
@@ -274,6 +277,7 @@ dialog > div:first-of-type > button {
   padding: 0;
   background-color: transparent;
   border: none;
+  align-self: flex-start;
 }
 
 dialog > form {
@@ -283,6 +287,10 @@ dialog > form {
 
 dialog input {
   width: 300px;
+}
+
+dialog label {
+  font-size: 0.9rem;
 }
 
 hr {
@@ -307,4 +315,26 @@ hr {
 #deleteProjectForm > button:hover {
   background-color: red;
   color: white;
+}
+
+.material-symbols-outlined {
+  user-select: none;
+}
+
+#detailsDialog {
+  width: 400px;
+}
+
+#detailsDialog > div[id] {
+  display: flex;
+  flex-direction: column;
+}
+
+#detailsDialog > div[id]:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+#detailsDialog > div[id] > span:first-child {
+  color: var(--muted-text-color);
+  font-size: 0.9rem;
 }

@@ -150,6 +150,9 @@ class DomController {
   static editTodoCloseBtns = document.querySelectorAll(`button[data-closes="${this.editTodoDialog.id}"]`);
   static editTodoForm = document.getElementById("editTodoForm");
 
+  static detailsDialog = document.getElementById("detailsDialog");
+  static detailsCloseBtn = document.querySelector(`button[data-closes="${this.detailsDialog.id}"]`);
+
   static createButtonIcon = (iconName = "circle") => {
     const btn = document.createElement("button");
     const span = document.createElement("span");
@@ -200,7 +203,7 @@ class DomController {
     
     const ul = document.createElement("ul");
     
-    const priorityColors = { low: "green", medium: "yellow", high: "red"};
+    const priorityColors = { low: "green", medium: "orange", high: "red"};
     const project = Storage.getProjectList()[TodoApp.getActiveProjectIndex()];
     for (let [i, todo] of project.todoList.entries()) {
       const li = document.createElement("li");
@@ -212,6 +215,9 @@ class DomController {
       const deleteBtn = this.createButtonIcon("delete");
 
       div.style.borderLeft = `6px solid ${priorityColors[todo.priority]}`;
+      div.addEventListener("click", () => {
+        this.openDetailsDialog(todo);
+      })
       checkbox.id = `todo${i}`;
       checkbox.setAttribute("type", "checkbox");
       if (todo.done) {
@@ -219,11 +225,11 @@ class DomController {
         todoName. classList.add("done");
       }
       checkbox.addEventListener("click", (event) => {
+        event.stopPropagation();
         if (event.currentTarget.checked) {
           todoName.classList.add("done")
           todo.done = true;
-        }
-        else {
+        } else {
           todoName.classList.remove("done");
           todo.done = false;
         }
@@ -232,12 +238,17 @@ class DomController {
       todoName.textContent = todo.name;
       todoName.setAttribute("for", `todo${i}`);
       todoDueDate.textContent = todo.dueDate;
+      todoName.addEventListener("click", (event) => {
+        event.stopPropagation();
+      })
       editBtn.title = "Edit to-do"
-      editBtn.addEventListener("click", () => {
+      editBtn.addEventListener("click", (event) => {
+        event.stopPropagation();
         this.openEditTodoDialog(i, todo);
       })
       deleteBtn.title = "Delete to-do"
-      deleteBtn.addEventListener("click", () => {
+      deleteBtn.addEventListener("click", (event) => {
+        event.stopPropagation();
         this.deleteTodo(i);
       })
 
@@ -286,6 +297,22 @@ class DomController {
     priority.value = todo.priority;
   }
 
+  static openDetailsDialog = (todo) => {
+    this.detailsDialog.showModal();
+
+    const name = document.querySelector("#detailsTodoName");
+    const description = document.querySelector("#detailsDescription > span:last-child");
+    const dueDate = document.querySelector("#detailsDueDate > span:last-child");
+    const priority = document.querySelector("#detailsPriority > span:last-child");
+    
+    console.log(todo)
+
+    name.textContent = todo.name;
+    description.textContent = todo.description || "...";
+    dueDate.textContent = todo.dueDate || "...";
+    priority.textContent = todo.priority;
+  }
+
   static deleteTodo = (index) => {
     TodoApp.deleteTodo(index);
     this.renderTodoList();
@@ -330,6 +357,8 @@ class DomController {
     this.addTodoCloseBtns.forEach(btn => btn.addEventListener("click", () => this.addTodoDialog.close()));
 
     this.editTodoCloseBtns.forEach(btn => btn.addEventListener("click", () => this.editTodoDialog.close()));
+
+    this.detailsCloseBtn.addEventListener("click", () => this.detailsDialog.close());
   }
 
   static initThemeSwitcher = () => {
