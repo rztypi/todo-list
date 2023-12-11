@@ -93,8 +93,10 @@ class FormHandler {
     if (projectListLength === 1) {
       return false;
     }
-    if (this.editProjectId === TodoApp.getActiveProjectIndex() || TodoApp.getActiveProjectIndex() + 1 === projectListLength) {
+    if (this.editProjectId === TodoApp.getActiveProjectIndex()) {
       TodoApp.setActiveProjectIndex(0);
+    } else if (this.editProjectId < TodoApp.getActiveProjectIndex()) {
+      TodoApp.setActiveProjectIndex(TodoApp.getActiveProjectIndex() - 1);
     }
     TodoApp.deleteProject(this.editProjectId);
     return true;
