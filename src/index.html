@@ -40,8 +40,10 @@
         <label for="addProjectName">Project Name</label>
         <input type="text" id="addProjectName" autofocus required>
       </form>
-      <button type="button" data-closes="addProjectDialog">Close</button>
-      <button type="submit" form="addProjectForm">Add</button>
+      <div class="dialogButtons">
+        <button type="button" data-closes="addProjectDialog">Close</button>
+        <button type="submit" form="addProjectForm">Add</button>
+      </div>
     </dialog>
 
     <!-- Edit project dialog -->
@@ -58,8 +60,11 @@
         <label for="addProjectName">Project Name</label>
         <input type="text" id="editProjectName" autofocus required>
       </form>
-      <button type="button" data-closes="editProjectDialog">Close</button>
-      <button type="submit" form="editProjectForm">Save</button>
+      <div class="dialogButtons">
+        <button type="button" data-closes="editProjectDialog">Close</button>
+        <button type="submit" form="editProjectForm">Save</button>
+      </div>
+      <hr>
       <form id="deleteProjectForm">
         <button type="submit">Delete Project</button>
       </form>
@@ -98,8 +103,10 @@
           <option value="high">High</option>
         </select>
       </form>
-      <button type="button" data-closes="addTodoDialog">Close</button>
-      <button type="submit" form="addTodoForm">Add</button>
+      <div class="dialogButtons">
+        <button type="button" data-closes="addTodoDialog">Close</button>
+        <button type="submit" form="addTodoForm">Add</button>
+      </div>
     </dialog>
 
     <!-- Todo list -->
@@ -129,8 +136,10 @@
           <option value="high">High</option>
         </select>
       </form>
-      <button type="button" data-closes="editTodoDialog">Close</button>
-      <button type="submit" form="editTodoForm">Save</button>
+      <div class="dialogButtons">
+        <button type="button" data-closes="editTodoDialog">Close</button>
+        <button type="submit" form="editTodoForm">Save</button>
+      </div>
     </dialog>
   </main>
 </body>

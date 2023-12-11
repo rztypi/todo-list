@@ -255,7 +255,7 @@ dialog::backdrop {
 
 dialog input,
 dialog select {
-  margin-bottom: 6px;
+  margin-bottom: 16px;
   border: 1px solid var(--heavy-fade-color);
   background-color: var(--base-color);
   color: var(--normal-text-color);
@@ -279,13 +279,32 @@ dialog > div:first-of-type > button {
 dialog > form {
   display: flex;
   flex-direction: column;
-  margin-bottom: 12px;
 }
 
 dialog input {
   width: 300px;
 }
 
-#deleteProjectForm {
-  margin-top: 36px;
+hr {
+  margin: 24px 0;
+}
+
+.dialogButtons {
+  display: flex;
+  gap: 6px;
+}
+
+.dialogButtons > :first-child {
+  margin-left: auto;
+}
+
+#deleteProjectForm > button {
+  background-color: transparent;
+  border: 2px solid red;
+  color: red;
+}
+
+#deleteProjectForm > button:hover {
+  background-color: red;
+  color: white;
 }
