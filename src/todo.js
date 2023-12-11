@@ -297,6 +297,7 @@ class DomController {
         dialog.close();
         this.renderProjectList();
         this.renderTodoList();
+        event.currentTarget.reset();
       }
     }
 
