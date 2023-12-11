@@ -76,6 +76,7 @@ class FormHandler {
       return false;
     }
     TodoApp.addProject(name.value);
+    TodoApp.setActiveProjectIndex(Storage.getProjectList().length - 1);
     return true;
   }
 
@@ -310,7 +311,7 @@ class DomController {
     name.textContent = todo.name;
     description.textContent = todo.description || "...";
     dueDate.textContent = todo.dueDate || "...";
-    priority.textContent = todo.priority;
+    priority.textContent = todo.priority.charAt(0).toUpperCase() + todo.priority.slice(1);
   }
 
   static deleteTodo = (index) => {
