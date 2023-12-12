@@ -298,6 +298,33 @@ hr {
   margin: 24px 0;
 }
 
+button[form="addProjectForm"],
+button[form="addTodoForm"] {
+  background-color: transparent;
+  border: 2px solid green;
+  color: green;
+}
+
+button[form="addProjectForm"]:hover,
+button[form="addTodoForm"]:hover {
+  background-color: green;
+  color: white;
+}
+
+
+button[form="editProjectForm"],
+button[form="editTodoForm"] {
+  background-color: transparent;
+  border: 2px solid orange;
+  color: orange;
+}
+
+button[form="editProjectForm"]:hover,
+button[form="editTodoForm"]:hover {
+  background-color: orange;
+  color: white;
+}
+
 #deleteProjectForm > button {
   background-color: transparent;
   border: 2px solid red;

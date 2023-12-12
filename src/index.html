@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Todo List</title>
+  <title>To-do List</title>
 </head>
 <body>
   <header>
-    <h1>Todo List</h1>
+    <h1>To-do List</h1>
     <button type="button" id="themeSwitch" title="Toggle theme">
       <span class="material-symbols-outlined">
         light_mode
@@ -67,16 +67,16 @@
   </aside>
   <main>
 
-    <!-- Add todo button + dialog -->
+    <!-- Add to-do button + dialog -->
     <button type="button" data-opens="addTodoDialog">
       <span class="material-symbols-outlined">
         add
       </span>
-      <span>Add new todo</span>
+      <span>Add new to-do</span>
     </button>
     <dialog id="addTodoDialog">
       <div>
-        <h3>Add New Todo</h3>
+        <h3>Add New To-do</h3>
         <button type="button" data-closes="addTodoDialog">
           <span class="material-symbols-outlined">
             close
@@ -100,7 +100,7 @@
       <button type="submit" form="addTodoForm">Add</button>
     </dialog>
 
-    <!-- Todo list -->
+    <!-- To-do list -->
     <div id="todos"></div>
 
     <dialog id="detailsDialog">
@@ -126,10 +126,10 @@
       </div>
     </dialog>
 
-    <!-- Edit todo dialog -->
+    <!-- Edit to-do dialog -->
     <dialog id="editTodoDialog">
       <div>
-        <h3>Edit Todo</h3>
+        <h3>Edit To-do</h3>
         <button type="button" data-closes="editTodoDialog">
           <span class="material-symbols-outlined">
             close
