@@ -448,10 +448,20 @@ class DomController {
     });
   };
 
+  static initHamburger = () => {
+    const hamburgerBtn = document.querySelector("#hamburger");
+    const aside = document.querySelector("aside");
+
+    hamburgerBtn.addEventListener("click", () => {
+      aside.classList.toggle("show");
+    });
+  };
+
   static initPage = () => {
     this.initForms();
     this.initDialogBtns();
     this.initThemeSwitcher();
+    this.initHamburger();
 
     this.renderProjectList();
     this.renderTodoList();

@@ -101,22 +101,29 @@ h3 {
   color: var(--normal-text-color);
 }
 
+.material-symbols-outlined {
+  font-size: 1.5rem;
+}
+
 header {
   grid-area: header;
+  padding: 0 16px;
   background-color: var(--fade-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
+#hamburger {
+  display: none;
+}
+
 header > h1 {
-  margin-left: 16px;
   color: var(--active-text-color);
 }
 
 #themeSwitch {
-  margin-right: 16px;
-  padding: 0;
+  padding: 4px;
   background-color: transparent;
   border: none;
   display: flex;
@@ -127,7 +134,7 @@ header > h1 {
   color: var(--muted-text-color);
 }
 
-#themeSwitch > span:hover {
+#themeSwitch:hover > span {
   color: var(--active-text-color);
 }
 
@@ -229,6 +236,7 @@ button[data-opens="addTodoDialog"]:hover {
   gap: 16px;
   margin: 16px;
   padding: 12px;
+  min-width: 300px;
   background-color: var(--fade-color);
   outline: 1px solid var(--base-color);
   cursor: pointer;
@@ -374,4 +382,47 @@ button[form="editTodoForm"]:hover {
 #detailsDialog > div[id] > span:first-child {
   color: var(--muted-text-color);
   font-size: 0.9rem;
+}
+
+@media only screen and (max-width: 768px) {
+  :root {
+    font-size: 90%;
+  }
+
+  body {
+    grid-template:
+      "header" 64px
+      "main" 1fr / 1fr;
+  }
+
+  #hamburger {
+    align-self: stretch;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+  }
+
+  #hamburger > span {
+    font-size: 2.5rem;
+  }
+
+  #hamburger:hover > span {
+    color: var(--active-text-color);
+  }
+
+  aside {
+    display: none;
+    position: absolute;
+    top: 64px;
+    bottom: 0;
+    width: 100%;
+    min-height: max-content;
+    background-color: var(--base-color);
+  }
+
+  aside.show {
+    display: block;
+  }
 }
