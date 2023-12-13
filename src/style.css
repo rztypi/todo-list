@@ -172,10 +172,6 @@ button {
   cursor: pointer;
 }
 
-#projects li > div.active {
-  background-color: var(--light-fade-color);
-}
-
 #projects li > div > span {
   overflow: hidden;
 }
@@ -195,11 +191,15 @@ button {
   color: var(--active-text-color);
 }
 
-#projects li > div:hover {
+#projects li > div.active,
+#projects li > div:hover,
+#projects li > div:active {
   background-color: var(--light-fade-color);
 }
 
-#projects li > div:hover > button {
+#projects li > div.active > button,
+#projects li > div:hover > button,
+#projects li > div:active > button {
   display: flex;
   align-items: center;
 }
