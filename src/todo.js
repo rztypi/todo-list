@@ -5,13 +5,14 @@ class Storage {
   ];
 
   static getProjectList = () => {
-    this.projectList = JSON.parse(localStorage.getItem("projectList")) || this.projectList;
+    this.projectList =
+      JSON.parse(localStorage.getItem("projectList")) || this.projectList;
     return this.projectList;
-  }
+  };
 
   static saveProjectList = () => {
     localStorage.setItem("projectList", JSON.stringify(this.projectList));
-  }
+  };
 }
 
 class TodoApp {
@@ -19,51 +20,52 @@ class TodoApp {
 
   static getActiveProjectIndex = () => {
     return this.activeProjectIndex;
-  }
+  };
 
   static setActiveProjectIndex = (index) => {
     this.activeProjectIndex = index;
-  }
+  };
 
   static addProject = (name) => {
     const projectList = Storage.getProjectList();
     projectList.push({ name, todoList: [] });
     Storage.saveProjectList();
-  }
+  };
 
   static deleteProject = (index) => {
     const projectList = Storage.getProjectList();
     projectList.splice(index, 1);
     Storage.saveProjectList();
-  }
+  };
 
   static renameProject = (index, name) => {
     const project = Storage.getProjectList()[index];
     project.name = name;
     Storage.saveProjectList();
-  }
+  };
 
   static addTodo = (name, description, dueDate, priority) => {
     const project = Storage.getProjectList()[this.getActiveProjectIndex()];
     const todo = { name, description, dueDate, priority, done: false };
     project.todoList.push(todo);
     Storage.saveProjectList();
-  }
+  };
 
   static editTodo = (index, name, description, dueDate, priority) => {
-    const todo = Storage.getProjectList()[this.getActiveProjectIndex()].todoList[index];
+    const todo =
+      Storage.getProjectList()[this.getActiveProjectIndex()].todoList[index];
     todo.name = name;
     todo.description = description;
     todo.dueDate = dueDate;
     todo.priority = priority;
     Storage.saveProjectList();
-  }
+  };
 
   static deleteTodo = (index) => {
     const project = Storage.getProjectList()[this.getActiveProjectIndex()];
     project.todoList.splice(index, 1);
     Storage.saveProjectList();
-  }
+  };
 }
 
 class FormHandler {
@@ -78,7 +80,7 @@ class FormHandler {
     TodoApp.addProject(name.value);
     TodoApp.setActiveProjectIndex(Storage.getProjectList().length - 1);
     return true;
-  }
+  };
 
   static editProject = () => {
     const name = document.getElementById("editProjectName");
@@ -87,7 +89,7 @@ class FormHandler {
     }
     TodoApp.renameProject(this.editProjectId, name.value);
     return true;
-  }
+  };
 
   static deleteProject = () => {
     const projectListLength = Storage.getProjectList().length;
@@ -101,19 +103,24 @@ class FormHandler {
     }
     TodoApp.deleteProject(this.editProjectId);
     return true;
-  }
+  };
 
   static addTodo = () => {
-      const name = document.getElementById("addTodoName");
-      const description = document.getElementById("addDescription");
-      const dueDate = document.getElementById("addDueDate");
-      const priority = document.getElementById("addPriority");
-      if (!name || !description || !dueDate || !priority) {
-        return false;
-      }
-      TodoApp.addTodo(name.value, description.value, dueDate.value, priority.value);
-      return true;
-  }
+    const name = document.getElementById("addTodoName");
+    const description = document.getElementById("addDescription");
+    const dueDate = document.getElementById("addDueDate");
+    const priority = document.getElementById("addPriority");
+    if (!name || !description || !dueDate || !priority) {
+      return false;
+    }
+    TodoApp.addTodo(
+      name.value,
+      description.value,
+      dueDate.value,
+      priority.value
+    );
+    return true;
+  };
 
   static editTodo = () => {
     const name = document.getElementById("editTodoName");
@@ -123,9 +130,15 @@ class FormHandler {
     if (!name || !description || !dueDate || !priority) {
       return false;
     }
-    TodoApp.editTodo(this.editTodoId, name.value, description.value, dueDate.value, priority.value);
+    TodoApp.editTodo(
+      this.editTodoId,
+      name.value,
+      description.value,
+      dueDate.value,
+      priority.value
+    );
     return true;
-}
+  };
 }
 
 class DomController {
@@ -133,42 +146,56 @@ class DomController {
   static todosDiv = document.getElementById("todos");
 
   static addProjectDialog = document.getElementById("addProjectDialog");
-  static addProjectOpenBtn = document.querySelector(`button[data-opens="${this.addProjectDialog.id}"]`);
-  static addProjectCloseBtns = document.querySelectorAll(`button[data-closes="${this.addProjectDialog.id}"]`);
+  static addProjectOpenBtn = document.querySelector(
+    `button[data-opens="${this.addProjectDialog.id}"]`
+  );
+  static addProjectCloseBtns = document.querySelectorAll(
+    `button[data-closes="${this.addProjectDialog.id}"]`
+  );
   static addProjectForm = document.getElementById("addProjectForm");
 
   static editProjectDialog = document.getElementById("editProjectDialog");
-  static editProjectCloseBtns = document.querySelectorAll(`button[data-closes="${this.editProjectDialog.id}"]`);
+  static editProjectCloseBtns = document.querySelectorAll(
+    `button[data-closes="${this.editProjectDialog.id}"]`
+  );
   static editProjectForm = document.getElementById("editProjectForm");
   static deleteProjectForm = document.getElementById("deleteProjectForm");
 
   static addTodoDialog = document.getElementById("addTodoDialog");
-  static addTodoOpenBtn = document.querySelector(`button[data-opens="${this.addTodoDialog.id}"]`);
-  static addTodoCloseBtns = document.querySelectorAll(`button[data-closes="${this.addTodoDialog.id}"]`);
+  static addTodoOpenBtn = document.querySelector(
+    `button[data-opens="${this.addTodoDialog.id}"]`
+  );
+  static addTodoCloseBtns = document.querySelectorAll(
+    `button[data-closes="${this.addTodoDialog.id}"]`
+  );
   static addTodoForm = document.getElementById("addTodoForm");
 
   static editTodoDialog = document.getElementById("editTodoDialog");
-  static editTodoCloseBtns = document.querySelectorAll(`button[data-closes="${this.editTodoDialog.id}"]`);
+  static editTodoCloseBtns = document.querySelectorAll(
+    `button[data-closes="${this.editTodoDialog.id}"]`
+  );
   static editTodoForm = document.getElementById("editTodoForm");
 
   static detailsDialog = document.getElementById("detailsDialog");
-  static detailsCloseBtn = document.querySelector(`button[data-closes="${this.detailsDialog.id}"]`);
+  static detailsCloseBtn = document.querySelector(
+    `button[data-closes="${this.detailsDialog.id}"]`
+  );
 
   static createButtonIcon = (iconName = "circle") => {
     const btn = document.createElement("button");
     const span = document.createElement("span");
-    
+
     btn.setAttribute("type", "button");
     span.classList.add("material-symbols-outlined");
     span.textContent = iconName;
-    
+
     btn.appendChild(span);
     return btn;
-  }
+  };
 
   static renderProjectList = () => {
     this.projectsDiv.replaceChildren();
-    
+
     const ul = document.createElement("ul");
 
     const projectList = Storage.getProjectList();
@@ -185,11 +212,11 @@ class DomController {
         this.switchProject(i);
       });
       projectNameSpan.textContent = project.name;
-      editBtn.title = "Edit project"
+      editBtn.title = "Edit project";
       editBtn.addEventListener("click", (event) => {
         event.stopPropagation();
         this.openEditProjectDialog(i, project);
-      })
+      });
 
       ul.appendChild(li);
       li.appendChild(div);
@@ -197,14 +224,14 @@ class DomController {
       div.appendChild(editBtn);
     }
     this.projectsDiv.appendChild(ul);
-  }
+  };
 
   static renderTodoList = () => {
     this.todosDiv.replaceChildren();
-    
+
     const ul = document.createElement("ul");
-    
-    const priorityColors = { low: "green", medium: "orange", high: "red"};
+
+    const priorityColors = { low: "green", medium: "orange", high: "red" };
     const project = Storage.getProjectList()[TodoApp.getActiveProjectIndex()];
     for (let [i, todo] of project.todoList.entries()) {
       const li = document.createElement("li");
@@ -218,40 +245,40 @@ class DomController {
       div.style.borderLeft = `6px solid ${priorityColors[todo.priority]}`;
       div.addEventListener("click", () => {
         this.openDetailsDialog(todo);
-      })
+      });
       checkbox.id = `todo${i}`;
       checkbox.setAttribute("type", "checkbox");
       if (todo.done) {
         checkbox.setAttribute("checked", true);
-        todoName. classList.add("done");
+        todoName.classList.add("done");
       }
       checkbox.addEventListener("click", (event) => {
         event.stopPropagation();
         if (event.currentTarget.checked) {
-          todoName.classList.add("done")
+          todoName.classList.add("done");
           todo.done = true;
         } else {
           todoName.classList.remove("done");
           todo.done = false;
         }
         Storage.saveProjectList();
-      })
+      });
       todoName.textContent = todo.name;
       todoName.setAttribute("for", `todo${i}`);
       todoDueDate.textContent = todo.dueDate;
       todoName.addEventListener("click", (event) => {
         event.stopPropagation();
-      })
-      editBtn.title = "Edit to-do"
+      });
+      editBtn.title = "Edit to-do";
       editBtn.addEventListener("click", (event) => {
         event.stopPropagation();
         this.openEditTodoDialog(i, todo);
-      })
-      deleteBtn.title = "Delete to-do"
+      });
+      deleteBtn.title = "Delete to-do";
       deleteBtn.addEventListener("click", (event) => {
         event.stopPropagation();
         this.deleteTodo(i);
-      })
+      });
 
       ul.appendChild(li);
       li.appendChild(div);
@@ -262,7 +289,7 @@ class DomController {
       div.appendChild(deleteBtn);
     }
     this.todosDiv.appendChild(ul);
-  }
+  };
 
   static switchProject = (index) => {
     if (index === TodoApp.getActiveProjectIndex()) {
@@ -271,16 +298,16 @@ class DomController {
     TodoApp.setActiveProjectIndex(index);
     this.renderProjectList();
     this.renderTodoList();
-  }
-  
+  };
+
   static openEditProjectDialog = (index, project) => {
     FormHandler.editProjectId = index;
-    
+
     this.editProjectDialog.showModal();
 
     const name = document.getElementById("editProjectName");
     name.value = project.name;
-  }
+  };
 
   static openEditTodoDialog = (index, todo) => {
     FormHandler.editTodoId = index;
@@ -296,26 +323,31 @@ class DomController {
     description.value = todo.description;
     dueDate.value = todo.dueDate;
     priority.value = todo.priority;
-  }
+  };
 
   static openDetailsDialog = (todo) => {
     this.detailsDialog.showModal();
 
     const name = document.querySelector("#detailsTodoName");
-    const description = document.querySelector("#detailsDescription > span:last-child");
+    const description = document.querySelector(
+      "#detailsDescription > span:last-child"
+    );
     const dueDate = document.querySelector("#detailsDueDate > span:last-child");
-    const priority = document.querySelector("#detailsPriority > span:last-child");
+    const priority = document.querySelector(
+      "#detailsPriority > span:last-child"
+    );
 
     name.textContent = todo.name;
     description.textContent = todo.description || "...";
     dueDate.textContent = todo.dueDate || "...";
-    priority.textContent = todo.priority.charAt(0).toUpperCase() + todo.priority.slice(1);
-  }
+    priority.textContent =
+      todo.priority.charAt(0).toUpperCase() + todo.priority.slice(1);
+  };
 
   static deleteTodo = (index) => {
     TodoApp.deleteTodo(index);
     this.renderTodoList();
-  }
+  };
 
   static initForms = () => {
     const baseFormHandler = (event, formHandler, dialog) => {
@@ -327,7 +359,7 @@ class DomController {
         this.renderTodoList();
         event.currentTarget.reset();
       }
-    }
+    };
 
     this.addProjectForm.addEventListener("submit", (event) => {
       baseFormHandler(event, FormHandler.addProject, this.addProjectDialog);
@@ -343,22 +375,36 @@ class DomController {
     });
     this.editTodoForm.addEventListener("submit", (event) => {
       baseFormHandler(event, FormHandler.editTodo, this.editTodoDialog);
-    })
-  }
+    });
+  };
 
   static initDialogBtns = () => {
-    this.addProjectOpenBtn.addEventListener("click", () => this.addProjectDialog.showModal());
-    this.addProjectCloseBtns.forEach(btn => btn.addEventListener("click", () => this.addProjectDialog.close()));
+    this.addProjectOpenBtn.addEventListener("click", () =>
+      this.addProjectDialog.showModal()
+    );
+    this.addProjectCloseBtns.forEach((btn) =>
+      btn.addEventListener("click", () => this.addProjectDialog.close())
+    );
 
-    this.editProjectCloseBtns.forEach(btn => btn.addEventListener("click", () => this.editProjectDialog.close()));
+    this.editProjectCloseBtns.forEach((btn) =>
+      btn.addEventListener("click", () => this.editProjectDialog.close())
+    );
 
-    this.addTodoOpenBtn.addEventListener("click", () => this.addTodoDialog.showModal());
-    this.addTodoCloseBtns.forEach(btn => btn.addEventListener("click", () => this.addTodoDialog.close()));
+    this.addTodoOpenBtn.addEventListener("click", () =>
+      this.addTodoDialog.showModal()
+    );
+    this.addTodoCloseBtns.forEach((btn) =>
+      btn.addEventListener("click", () => this.addTodoDialog.close())
+    );
 
-    this.editTodoCloseBtns.forEach(btn => btn.addEventListener("click", () => this.editTodoDialog.close()));
+    this.editTodoCloseBtns.forEach((btn) =>
+      btn.addEventListener("click", () => this.editTodoDialog.close())
+    );
 
-    this.detailsCloseBtn.addEventListener("click", () => this.detailsDialog.close());
-  }
+    this.detailsCloseBtn.addEventListener("click", () =>
+      this.detailsDialog.close()
+    );
+  };
 
   static initThemeSwitcher = () => {
     const getStoredTheme = () => localStorage.getItem("theme");
@@ -370,11 +416,11 @@ class DomController {
         return "light";
       }
       return theme;
-    }
+    };
 
     const setTheme = (theme) => {
       document.documentElement.setAttribute("data-theme", theme);
-    }
+    };
 
     const themeSwitcher = document.getElementById("themeSwitch");
 
@@ -389,19 +435,18 @@ class DomController {
       } else {
         icon.textContent = "dark_mode";
       }
-    }
+    };
 
     setTheme(getPreferredTheme());
     showActiveTheme(getPreferredTheme());
 
     themeSwitcher.addEventListener("click", () => {
-      const theme = (getPreferredTheme() === "light") ? "dark" : "light";
+      const theme = getPreferredTheme() === "light" ? "dark" : "light";
       setTheme(theme);
       showActiveTheme(theme);
       setStoredTheme(theme);
     });
-
-  }
+  };
 
   static initPage = () => {
     this.initForms();
@@ -410,11 +455,7 @@ class DomController {
 
     this.renderProjectList();
     this.renderTodoList();
-  }
+  };
 }
 
-export {
-  Storage,
-  TodoApp,
-  DomController,
-};
+export { Storage, TodoApp, DomController };
