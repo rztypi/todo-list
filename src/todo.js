@@ -452,8 +452,36 @@ class DomController {
     const hamburgerBtn = document.querySelector("#hamburger");
     const aside = document.querySelector("aside");
 
+    // hamburgerBtn.addEventListener("click", () => {
+    //   if (aside.classList.contains("show")) {
+    //     aside.classList.replace("show", "hide");
+    //     setTimeout(() => aside.classList.remove("hide"), 500);
+    //   } else {
+    //     aside.classList.add("show");
+    //   }
+    // });
+
     hamburgerBtn.addEventListener("click", () => {
-      aside.classList.toggle("show");
+      if (
+        aside.classList.contains("showAnim") ||
+        aside.classList.contains("hideAnim")
+      ) {
+        return;
+      }
+
+      if (!aside.classList.contains("show")) {
+        aside.classList.add("show");
+        aside.classList.add("showAnim");
+        setTimeout(() => {
+          aside.classList.remove("showAnim");
+        }, 500);
+      } else {
+        aside.classList.add("hideAnim");
+        setTimeout(() => {
+          aside.classList.remove("hideAnim");
+          aside.classList.remove("show");
+        }, 500);
+      }
     });
   };
 

@@ -422,7 +422,24 @@ button[form="editTodoForm"]:hover {
     background-color: var(--base-color);
   }
 
+  aside.showAnim {
+    animation: slide 0.5s ease both;
+  }
+
   aside.show {
     display: block;
+  }
+
+  aside.hideAnim {
+    animation: slide 0.5s ease reverse both;
+  }
+
+  @keyframes slide {
+    0% {
+      transform: translateX(-100vw);
+    }
+    100% {
+      transform: translateX(0vw);
+    }
   }
 }
