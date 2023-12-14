@@ -452,15 +452,6 @@ class DomController {
     const hamburgerBtn = document.querySelector("#hamburger");
     const aside = document.querySelector("aside");
 
-    // hamburgerBtn.addEventListener("click", () => {
-    //   if (aside.classList.contains("show")) {
-    //     aside.classList.replace("show", "hide");
-    //     setTimeout(() => aside.classList.remove("hide"), 500);
-    //   } else {
-    //     aside.classList.add("show");
-    //   }
-    // });
-
     hamburgerBtn.addEventListener("click", () => {
       if (
         aside.classList.contains("showAnim") ||
